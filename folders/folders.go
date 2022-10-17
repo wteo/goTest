@@ -29,15 +29,14 @@ func GetAllFolders(req *FetchFolderRequest) (*FetchFolderResponse, error) {
 	return ffr, nil
 }
 
-// FetchAllFoldersByOrgID, when called, this function returns all the Folder objects found in the sample.json file matching the entered organisation via orgId.
+// FetchAllFoldersByOrgID, function returns all the Folder structs found in the sample.json file matching the entered organisation via orgId.
 func FetchAllFoldersByOrgID(orgID uuid.UUID) ([]*Folder, error) {
 	// GetSampleData is a function created to read and parse data from sample.json file
-	// These data are saved and dereferenced in this "folders" variable as a Folder type slice.
 	folders := GetSampleData()
 
-	// resFolder, a blank slice is created to fill in objects that fulfil the desired condition
+	// resFolder, a blank slice is created to fill in structs that fulfil the desired condition
 	resFolder := []*Folder{}
-	// looping through the slice "folders" to find all objects that matches the desired organisation.
+	// looping through the slice "folders" to find all structs that matches the desired organisation.
 	for _, folder := range folders {
 		if folder.OrgId == orgID {
 			resFolder = append(resFolder, folder)
