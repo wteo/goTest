@@ -15,33 +15,34 @@ func Test_GetAllFolders(t *testing.T) {
 		// your test/s here
 
 		type test struct {
-			actualUUID uuid.UUID
+			uuid uuid.UUID
 			count int
 		}
 
 		tests := []test {
 			{
-				actualUUID: uuid.FromStringOrNil("c1556e17-b7c0-45a3-a6ae-9546248fb17b"),
+				uuid: uuid.FromStringOrNil("c1556e17-b7c0-45a3-a6ae-9546248fb17b"),
 				count: 0,
 			},
 			{
-				actualUUID: uuid.FromStringOrNil("c1556e17-b7c0-45a3-a6ae-9546248fb17a"),
-				count: 5,
+				uuid: uuid.FromStringOrNil("c1556e17-b7c0-45a3-a6ae-9546248fb17a"),
+				count: 999,
 			},
 		}
 
-		for _, tst := range tests {
-			
-			fetchedUUID := FetchFolderRequest{ OrgID: tst.actualUUID}
+		for _, test := range tests {
+
+			fetchedUUID := FetchFolderRequest{ OrgID: test.uuid}
 			res, _ := GetAllFolders(&fetchedUUID)
+			expectedCount := len(res.Folders)
 
 			for _, folder := range res.Folders {
-				if tst.actualUUID != folder.OrgId {
-					t.Errorf("Expected UUID: (%s) is not the same as actual UUID: (%s)", folder.OrgId, tst.actualUUID)
+				if test.uuid != folder.OrgId {
+					t.Errorf("Expected UUID: (%s) is not the same as actual UUID: (%s)", folder.OrgId, test.uuid)
 				}
 			}
-			if len(res.Folders) != tst.count {
-				t.Errorf("Expected count (%v), actual (%v)", len(res.Folders), tst.count)
+			if expectedCount != test.count {
+				t.Errorf("Expected count (%v), actual (%v)", expectedCount, test.count)
 			}
 		
 		}
