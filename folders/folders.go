@@ -6,20 +6,22 @@ import (
 
 func GetAllFolders(req *FetchFolderRequest) (*FetchFolderResponse, error) {
 	// err, f1 and fs variables are not used anywhere else in the code. Hence, they can be removed.
+	/*
 	var (
 		err error
 		f1  Folder
 		fs  []*Folder
 	)
+	*/
 	f := []Folder{}
 	r, _ := FetchAllFoldersByOrgID(req.OrgID)
 	// k index not used. Hence, should be replaced with _.
-	for k, v := range r {
+	for _, v := range r {
 		f = append(f, *v)
 	}
 	var fp []*Folder
 	// k1 index not used. Hence, should be replaced with _.
-	for k1, v1 := range f {
+	for _, v1 := range f {
 		fp = append(fp, &v1)
 	}
 	var ffr *FetchFolderResponse
